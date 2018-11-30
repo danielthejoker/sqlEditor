@@ -61,8 +61,10 @@
                 <h1>Dados</h1>
                 <table id="tabela_sql" class="table table-striped table-bordered table-hover">
                     <thead>
+                    <tr><th></th></tr>
                     </thead>
                     <tbody>
+                    <tr><td></td></tr>
                     </tbody>
                     <tfoot>
                     </tfoot>
