@@ -20,17 +20,17 @@
             <div class="form-row justify-content-center">
                 <div class="form-group col-md-5">
                     <label for="host">Host</label>
-                    <input type="text" class="form-control" id="host" name="host" placeholder="Host">
+                    <input type="text" class="form-control" id="host" name="host" placeholder="Host" value="localhost">
                 </div>
                 <div class="form-group col-md-5">
                     <label for="porta">Porta</label>
-                    <input type="text" class="form-control" id="porta" name="porta" placeholder="Porta">
+                    <input type="text" class="form-control" id="porta" name="porta" placeholder="Porta" value="5432">
                 </div>
             </div>
             <div class="form-row justify-content-center">
                 <div class="form-group col-md-5">
                     <label for="database">Database</label>
-                    <input type="text" class="form-control" id="database" name="porta" placeholder="Database">
+                    <input type="text" class="form-control" id="database" name="porta" placeholder="Database" value="teste">
                 </div>
                 <div class="form-group col-md-5">
                     <label for="usuario">Usuario</label>
@@ -51,7 +51,7 @@
             <div class="card-header"><h1 class="display-4">SQL Editor</h1></div>
             <div class="form-group col-md-10 offset-1">
                 <label for="sql">SQL</label>
-                <textarea class="form-control" id="sql" name="sql" rows="5"></textarea>
+                <textarea class="form-control" id="sql" name="sql" rows="5">select * from material</textarea>
             </div>
             <div class="btn-group justify-content-end">
                 <button type="button" id="executar" value="executar" name="executar" class="btn btn-info btn-lg">Executar</button>
@@ -61,10 +61,8 @@
                 <h1>Dados</h1>
                 <table id="tabela_sql" class="table table-striped table-bordered table-hover">
                     <thead>
-                    <th></th>
                     </thead>
                     <tbody>
-                    <td></td>
                     </tbody>
                     <tfoot>
                     </tfoot>
