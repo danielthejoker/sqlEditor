@@ -92,7 +92,6 @@
                         linha.append('<th>'+dbData.colunas[h]+'</th>');
                         tabela.find('thead').append(linha);
                     }
-
                 } else {
                     console.log('Falhou');
                 }
