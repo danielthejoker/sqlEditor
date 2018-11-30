@@ -86,8 +86,9 @@
         })
             .done(function (dbData) {
                 if (dbData.numeroCampos > 0) {
-                    $("#tabela_sql").find("tbody").empty();
                     tabela = $('#tabela_sql');
+                    tabela.find('tbody').empty();
+                    tabela.find('thead').empty();
                     var linha = $('<tr></tr>');
                     for (var h = 0; h < dbData.colunas.length; h++) {
                         linha.append('<th>'+dbData.colunas[h]+'</th>');
