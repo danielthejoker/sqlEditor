@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="container">
-    <div id="conexao_erro" class="alert alert-danger" role="alert" hidden></div>
+    <div id="erro" class="alert alert-danger" role="alert" style="display: none;"></div>
     <form id="formulario_sql">
         <div id="conectar" class="card bg-light mb-3">
 
@@ -30,17 +30,17 @@
             <div class="form-row justify-content-center">
                 <div class="form-group col-md-5">
                     <label for="database">Database</label>
-                    <input type="text" class="form-control" id="database" name="porta" placeholder="Database" value="teste">
+                    <input type="text" class="form-control" id="database" name="porta" placeholder="Database" value="testeDB">
                 </div>
                 <div class="form-group col-md-5">
                     <label for="usuario">Usuario</label>
-                    <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario">
+                    <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario" value="postgres">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-5 offset-1">
                     <label for="senha">Senha</label>
-                    <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha">
+                    <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" value="123456">
                 </div>
             </div>
             <div class="btn-group offset-1">
@@ -51,7 +51,7 @@
             <div class="card-header"><h1 class="display-4">SQL Editor</h1></div>
             <div class="form-group col-md-10 offset-1">
                 <label for="sql">SQL</label>
-                <textarea class="form-control" id="sql" name="sql" rows="5">select * from material</textarea>
+                <textarea class="form-control" id="sql" name="sql" rows="5">select * from pessoa</textarea>
             </div>
             <div class="btn-group justify-content-end">
                 <button type="button" id="executar" value="executar" name="executar" class="btn btn-info btn-lg">Executar</button>
