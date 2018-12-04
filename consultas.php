@@ -16,22 +16,25 @@ if ($_POST){
             $stringConexao = "host={$host} port={$porta} dbname={$banco} user={$usuario} password={$senha}";
             $db = @pg_connect($stringConexao);
             if (!$db){
-                $stringConexao = false;
-                $errorMessage = "Não foi possível conectar ao banco de dados.";
+                $conexao = false;
+                $errorMessage = 'Não foi possível conectar ao banco de dados.';
                 break;
             }
             $_SESSION['conexao']=$stringConexao;
-            $stringConexao = true;
+            $errorMessage = 'Conectado com sucesso!';
+            $conexao = true;
             break;
         case 'desconectar':
-            $stringConexao = false;
-            $_SESSION['conexao']=$stringConexao;
+            $conexao = false;
+            $_SESSION['conexao']= false;
+            $errorMessage = 'Desconectado com sucesso!';
             break;
         case 'executar':
             $db = @pg_connect($stringConexao);
             if (!$db){
                 $stringConexao = false;
                 $errorMessage = "Não foi possível conectar ao banco de dados.";
+                break;
             } else {
                 $sql = $_POST['sql'];
                 $result = @pg_query($db,$sql);
@@ -57,12 +60,13 @@ if ($_POST){
     }
     $dbData = @array(
         'tabela' => $tabela ,
-       'conexao' => $stringConexao,
+       'conexao' => $conexao,
         'aviso' => $warningMessage,
         'colunas' => $campos,
         'numeroCampos' => $i,
         'pgErroMensagem' => $errorMessage,
-        'linhas' => $linhas
+        'linhas' => $linhas,
+        'sql' => $sql
     );
     echo json_encode($dbData);
 }

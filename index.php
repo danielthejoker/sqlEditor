@@ -11,8 +11,8 @@
     <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="container">
-    <div id="erro" class="alert alert-danger" role="alert" style="display: none;"></div>
+<div class="container mt-4">
+    <div id="erro" class="alert"></div>
     <form id="formulario_sql">
         <div id="conectar" class="card bg-light mb-3">
 
@@ -20,27 +20,27 @@
             <div class="form-row justify-content-center">
                 <div class="form-group col-md-5">
                     <label for="host">Host</label>
-                    <input type="text" class="form-control" id="host" name="host" placeholder="Host" value="localhost">
+                    <input type="text" class="form-control" id="host" name="host" placeholder="Host" value="localhost" required>
                 </div>
                 <div class="form-group col-md-5">
                     <label for="porta">Porta</label>
-                    <input type="text" class="form-control" id="porta" name="porta" placeholder="Porta" value="5432">
+                    <input type="text" class="form-control" id="porta" name="porta" placeholder="Porta" value="5432" required>
                 </div>
             </div>
             <div class="form-row justify-content-center">
                 <div class="form-group col-md-5">
                     <label for="database">Database</label>
-                    <input type="text" class="form-control" id="database" name="porta" placeholder="Database" value="testeDB">
+                    <input type="text" class="form-control" id="database" name="porta" placeholder="Database" value="testeDB" required>
                 </div>
                 <div class="form-group col-md-5">
                     <label for="usuario">Usuario</label>
-                    <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario" value="postgres">
+                    <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario" value="postgres" required>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-5 offset-1">
                     <label for="senha">Senha</label>
-                    <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" value="123456">
+                    <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" required>
                 </div>
             </div>
             <div class="btn-group offset-1">
@@ -57,6 +57,8 @@
                 <button type="button" id="executar" value="executar" name="executar" class="btn btn-info btn-lg">Executar</button>
                 <button type="button" id="desconectar" value="desconectar" name="desconectar" class="btn btn-danger btn-lg offset-2">Desconectar</button>
             </div>
+            <div id="dica" class="offset-1" style="display: none;"><span class="small text-info">Dica: para executar um comando do historico basta clicar sobre o comando!</span></div>
+            <div id="ultimo_sql" class="container drill_cursor mt-2"></div>
             <div class="container">
                 <h1>Dados</h1>
                 <table id="tabela_sql" class="table table-striped table-bordered table-hover">
@@ -80,8 +82,5 @@
 <script src="js/scripts.js"></script>
 <script src="DataTables-1.10.18/js/jquery.dataTables.js"></script>
 <script src="DataTables-1.10.18/js/dataTables.bootstrap4.js"></script>
-<script>
-    $('#tabela_sql').dataTable();
-</script>
 </body>
 </html>

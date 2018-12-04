@@ -1,12 +1,16 @@
 (function() {
 
 
-    function alerta(mensagem, tipo) {
+    function erro(mensagem, tipo) {
+        $('#erro').empty();
         alerta = $('<div></div>');
         alerta.html(mensagem);
         alerta.addClass('alert');
         alerta.addClass('alert-' + tipo);
-        $('#conexao_erro').empty().append(alerta);
+        $('#erro').empty().append(alerta);
+        setTimeout(function() {
+            $('#erro').empty();
+        }, 2000);
     }
 
     $form = {
@@ -27,6 +31,8 @@
         }
     };
 
+
+
     $form._self.on('submit', function (e) {
         e.preventDefault();
     });
@@ -46,19 +52,20 @@
             dataType: 'json',
         })
             .done(function (dbData) {
-                if (dbData["conexao"] == true) {
+                if (dbData.conexao) {
                     $("#sql_editor").show();
                     $("#conectar").hide();
+                    $('#ultimo_sql').empty();
+                    $('#tabela_sql').find('thead').empty();
+                    $('#tabela_sql').find('tbody').empty();
                     console.log(dbData);
                     console.log(dbData.conexao);
+                    erro(dbData.pgErroMensagem,'success');
                 } else {
-                    console.log(dbData.conexao)
+                    console.log(dbData.conexao);
+                    erro(dbData.pgErroMensagem,'danger');
                 }
-                $('#erro').removeClass('alert-danger').removeClass('alert-warning').addClass('alert-success').show().text("Conectado com sucesso!");
-            }).fail(function(){
 
-                var aviso = "Erro ao executar o comando no banco de dados.";
-                $('#erro').removeClass('alert-success').removeClass('alert-warning').addClass('alert-danger').show().text(aviso);
             });
     });
 
@@ -75,6 +82,7 @@
                 $("#sql_editor").hide();
                 $("#conectar").show();
                 console.log(dbData.conexao);
+                erro('Desconectado com sucesso!', 'success');
             });
     });
 
@@ -94,7 +102,7 @@
                     tabela = $('#tabela_sql');
                     tabela.find('tbody').empty();
                     tabela.find('thead').empty();
-                    $('#erro').removeClass('alert-danger').removeClass('alert-warning').addClass('alert-success').show().text("Comando executado com sucesso!");
+                    erro('Comando executado com sucesso!', 'success');
                     var linha = $('<tr></tr>');
                     for (var h = 0; h < dbData.colunas.length; h++) {
                         linha.append('<th>'+dbData.colunas[h]+'</th>');
@@ -107,9 +115,11 @@
                             tabela.find('tbody').append(linha);
                         });
                     });
+                    imprime_na_pagina(dbData.sql);
+                    $('#dica').show();
                 } else {
                     console.log(dbData.pgErroMensagem);
-					tabela = $('#tabela_sql');
+                    tabela = $('#tabela_sql');
                     tabela.find('tbody').empty();
                     tabela.find('thead').empty();
                     var linha = $('<tr></tr>');
@@ -120,15 +130,61 @@
                             tabela.find('tbody').append(linha);
                         });
                     });
-                }
-                if(dbData.pgErroMensagem){
-                    erro = dbData.pgErroMensagem;
-                    $('#erro').removeClass('alert-success').removeClass('alert-warning').addClass('alert-danger').show().text(erro);
+                    if(dbData.pgErroMensagem){
+                        erro(dbData.pgErroMensagem,'danger');
+                    }
                 }
             });
     });
 
-})();
+    var div = document.getElementsByClassName('drill_cursor')[0];
+    div.addEventListener('click', function (event) {
+        if (event.target.tagName == "DIV") {
+            var valor = $(event.target).text();
+            $form.campos.sql.val(valor);
+            $.ajax({
+                method: "post",
+                url: "consultas.php",
+                data: {
+                    acao: 'executar',
+                    sql: $form.campos.sql.val()
+                },
+                dataType: 'json'
+            })
+                .done(function (dbData) {
+                    if (dbData.numeroCampos > 0) {
+                        tabela = $('#tabela_sql');
+                        tabela.find('tbody').empty();
+                        tabela.find('thead').empty();
+                        erro('Comando executado com sucesso!', 'success');
+                        var linha = $('<tr></tr>');
+                        for (var h = 0; h < dbData.colunas.length; h++) {
+                            linha.append('<th>' + dbData.colunas[h] + '</th>');
+                            tabela.find('thead').append(linha);
+                        }
+                        $.each(dbData.tabela, function (i, obj) {
+                            linha = $('<tr></tr>')
+                            $.each(obj, function (campo, valor) {
+                                linha.append('<td>' + valor + '</td>');
+                                tabela.find('tbody').append(linha);
+                            });
+                        });
+                    }
+                });
+        }
+    });
+
+        function imprime_na_pagina(mensagem){
+            sql = $('<div></div>');
+            sql.html(mensagem);
+            sql.addClass('alert');
+            sql.addClass('drill_cursor');
+            sql.addClass('alert-success');
+            $('#ultimo_sql').append(sql);
+
+        }
+
+    })();
 
 
 
